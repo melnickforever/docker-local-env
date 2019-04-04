@@ -17,7 +17,7 @@ services:
       - frontend
       - backend
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./public_html/:/var/www/html/
   db:
@@ -27,15 +27,20 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
-
-  adminer:
-    image: adminer
+    volumes:
+      - ./.docker_images/db/var/lib/mysql:/var/lib/mysql
+    networks:
+      - backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - db
     restart: always
     networks:
-      - frontend
       - backend
+      - frontend
     ports:
-      - 8090:8080
+      - 8080:80
 networks:
   frontend:
   backend:
