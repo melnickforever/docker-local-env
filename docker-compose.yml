@@ -1,0 +1,46 @@
+version: "3"
+services:
+  php:
+    build: './.docker_images/php'
+    image: melnickforever/dm-php
+    networks:
+      - backend
+    volumes:
+      - ./public_html/:/var/www/html/
+  apache:
+    build: './.docker_images/apache/'
+    image: melnickforever/dm-apache
+    depends_on:
+      - php
+      - db
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./public_html/:/var/www/html/
+  db:
+    build: './.docker_images/db/'
+    image: melnickforever/dm-db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - ./.docker_images/db/var/lib/mysql:/var/lib/mysql
+    networks:
+      - backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 8080:80
+networks:
+  frontend:
+  backend:
