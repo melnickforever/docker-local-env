@@ -1,7 +1,14 @@
 version: "3"
 services:
   php:
-    build: './.docker_images/php'
+    build:
+      context: './.docker_images/php'
+      args:
+#        version: 5.6
+         version: 7.0
+#        version: 7.1
+#        version: 7.2
+#        version: 7.3
     image: melnickforever/dm-php
     networks:
       - backend
