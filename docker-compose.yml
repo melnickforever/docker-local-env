@@ -12,6 +12,7 @@ services:
     image: melnickforever/dm-php
     networks:
       - backend
+      - frontend
     volumes:
       - ./public_html/:/var/www/html/
   apache:
@@ -24,7 +25,7 @@ services:
       - frontend
       - backend
     ports:
-      - "80:80"
+      - "8085:80"
     volumes:
       - ./public_html/:/var/www/html/
   db:
@@ -34,6 +35,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+
     volumes:
       - ./.docker_images/db/var/lib/mysql:/var/lib/mysql
     networks:

@@ -1,5 +1,5 @@
 ARG version
-FROM php:$version-apache
+FROM php:$version-fpm
 
 RUN docker-php-ext-install mysqli
 
