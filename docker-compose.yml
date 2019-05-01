@@ -12,7 +12,7 @@ services:
     image: melnickforever/dm-php
     networks:
       - backend
-      - frontend
+    restart: always
     volumes:
       - ./public_html/:/var/www/html/
   apache:
@@ -22,10 +22,10 @@ services:
       - php
       - db
     networks:
-      - frontend
       - backend
     ports:
       - "8085:80"
+    restart: always
     volumes:
       - ./public_html/:/var/www/html/
   db:
@@ -47,9 +47,7 @@ services:
     restart: always
     networks:
       - backend
-      - frontend
     ports:
       - 8080:80
 networks:
-  frontend:
   backend:
