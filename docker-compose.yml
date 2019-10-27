@@ -5,26 +5,16 @@ services:
       context: './.docker_images/php'
       args:
 #        version: 5.6
-         version: 7.0
-#        version: 7.1
+#         version: 7.0
+        version: 7.1
 #        version: 7.2
 #        version: 7.3
     image: melnickforever/dm-php
-    networks:
-      - backend
-    volumes:
-      - ./public_html/:/var/www/html/
-  apache:
-    build: './.docker_images/apache/'
-    image: melnickforever/dm-apache
-    depends_on:
-      - php
-      - db
-    networks:
-      - frontend
-      - backend
+    restart: always
     ports:
-      - "80:80"
+      - 8080:80
+    networks:
+      - backend
     volumes:
       - ./public_html/:/var/www/html/
   db:
@@ -47,7 +37,7 @@ services:
       - backend
       - frontend
     ports:
-      - 8080:80
+      - 8090:80
 networks:
   frontend:
   backend:
