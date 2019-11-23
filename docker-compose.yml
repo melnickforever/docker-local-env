@@ -12,7 +12,7 @@ services:
     image: melnickforever/dm-php
     restart: always
     ports:
-      - 8080:80
+      - 80:80
     networks:
       - backend
     volumes:
@@ -21,9 +21,9 @@ services:
     build: './.docker_images/db/'
     image: melnickforever/dm-db
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: abcABC123
+      MYSQL_ROOT_HOST: dbhost
     volumes:
       - ./.docker_images/db/var/lib/mysql:/var/lib/mysql
     networks:
